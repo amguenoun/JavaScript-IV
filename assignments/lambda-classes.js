@@ -32,6 +32,7 @@ class Student extends Person {
         this.previousBackground = att.previousBackground;
         this.className = att.className;
         this.favSubjects = att.favSubjects;
+        this.grade = att.grade;
     }
 
     listsSubjects() {
@@ -44,6 +45,15 @@ class Student extends Person {
 
     sprintChallenge(subject) {
         console.log(`${this.name} has begun spring challenge on ${subject}`);
+    }
+
+    graduate() {
+        if (this.grade >= 70) {
+            console.log(`${this.name} has a grade of ${this.grade}. They graduate!`);
+        }
+        else {
+            console.log(`${this.name} has a grade of ${this.grade}. They need more work!`);
+        }
     }
 }
 
@@ -60,6 +70,12 @@ class ProjectManager extends Instructor {
 
     debugsCode(student, subject) {
         console.log(`${this.name} debugs ${student.name}\'s code on ${subject}.`)
+    }
+
+    changeGrade(student) {
+        let movement = Math.round(Math.random() * 20); //random number between 0 and 20
+        let charge = Math.round(Math.random()) === 0 ? -1 : 1;
+        student.grade += (movement * charge);
     }
 }
 
@@ -89,6 +105,7 @@ const studentOne = new Student({
     previousBackground: "Finance",
     className: "CS130",
     favSubjects: ["HTML", "CSS", "Javascript", "Math"],
+    grade: 30,
 });
 
 const studentTwo = new Student({
@@ -98,6 +115,7 @@ const studentTwo = new Student({
     previousBackground: "Film",
     className: "CS201",
     favSubjects: ["HTML", "CSS", "Javascript", "Film Studies"],
+    grade: 60,
 });
 
 studentOne.speak(); //Hello, my name is Sam, I am from Miami.
@@ -155,3 +173,11 @@ projectManagerOne.speak(); //Hello, my name is Alex, I am from Alaska.
 projectManagerOne.grade(studentOne, "CSS"); //Sam receives a perfect score on CSS
 projectManagerTwo.standUp("@home"); //Leah announces to @home, @channel standy times!
 projectManagerTwo.debugsCode(studentTwo, "HTML"); //Leah debugs Ashley's code on HTML.
+
+//Stretch Testing
+
+console.log(studentTwo.grade); // 60
+projectManagerTwo.changeGrade(studentTwo); //Changes StudentTwo's grade
+console.log(studentTwo.grade); // random 60 +/- 20
+
+studentTwo.graduate(); // Will graduate if grade > 70
